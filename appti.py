@@ -22,8 +22,7 @@ class Ticket(db.Model):
     data_criacao = db.Column(db.DateTime, default=datetime.utcnow)
 
 # Inicializar Banco de Dados
-@app.before_first_request
-def create_tables():
+with app.app_context():
     db.create_all()
 
 # Rota para criar um ticket
@@ -73,4 +72,6 @@ def deletar_ticket(id):
     return jsonify({"mensagem": "Ticket deletado com sucesso!"}), 200
 
 if __name__ == '__main__':
+    with app.app_context():  # Inicializa o banco de dados no contexto do app
+        db.create_all()
     app.run(debug=True)
