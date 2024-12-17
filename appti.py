@@ -1,13 +1,11 @@
-# Sistema de Tickets para equipe de TI
-
-# Estrutura inicial usando Flask (Backend) e SQLite (Banco de Dados)
-
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tickets.db'
+
+# Configuração do PostgreSQL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuario:senha@localhost:5432/tickets_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -72,6 +70,4 @@ def deletar_ticket(id):
     return jsonify({"mensagem": "Ticket deletado com sucesso!"}), 200
 
 if __name__ == '__main__':
-    with app.app_context():  # Inicializa o banco de dados no contexto do app
-        db.create_all()
     app.run(debug=True)
