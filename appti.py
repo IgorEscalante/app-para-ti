@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import os 
+import os
 
 app = Flask(__name__)
 
@@ -28,7 +28,7 @@ with app.app_context():
 # Rota para a página principal
 @app.route('/')
 def index():
-    return render_template('templates/index.html')
+    return render_template('index.html')
 
 # Rota para criar um ticket
 @app.route('/tickets', methods=['POST'])
