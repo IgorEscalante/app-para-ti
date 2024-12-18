@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
@@ -24,6 +24,11 @@ class Ticket(db.Model):
 # Inicializar Banco de Dados
 with app.app_context():
     db.create_all()
+
+# Rota para a página principal
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 # Rota para criar um ticket
 @app.route('/tickets', methods=['POST'])
