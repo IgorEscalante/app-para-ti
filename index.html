@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Tickets</title>
+</head>
+<body>
+    <h1>Gerenciamento de Tickets</h1>
+
+    <!-- Formulário para criar um novo ticket -->
+    <form id="create-ticket-form">
+        <h2>Criar Ticket</h2>
+        <label for="nome_solicitante">Nome do Solicitante:</label><br>
+        <input type="text" id="nome_solicitante" name="nome_solicitante" required><br>
+        <label for="descricao">Descrição:</label><br>
+        <textarea id="descricao" name="descricao" required></textarea><br>
+        <label for="prioridade">Prioridade:</label><br>
+        <select id="prioridade" name="prioridade">
+            <option value="Baixa">Baixa</option>
+            <option value="Média">Média</option>
+            <option value="Alta">Alta</option>
+        </select><br>
+        <button type="submit">Criar Ticket</button>
+    </form>
+
+    <script>
+        document.getElementById('create-ticket-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nome_solicitante = document.getElementById('nome_solicitante').value;
+            const descricao = document.getElementById('descricao').value;
+            const prioridade = document.getElementById('prioridade').value;
+
+            fetch('/tickets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nome_solicitante: nome_solicitante,
+                    descricao: descricao,
+                    prioridade: prioridade,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Ticket criado com sucesso: ' + data.ticket_id);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
